@@ -1416,9 +1416,10 @@ addToDone("Exercise 99 is complete.");
 // Exercise 100
 // Write a function named getAverageSpentPerItem that takes in the shopping cart and returns the average of summing each item's quanties times that item's price.
 // Hint: You may need to set an initial total price and total total quantity to zero, then sum up and divide that total price by the total quantity
-let mappedPrices = shoppingCart.items.map((x) => x.price * x.quantity);
-const getAverageSpentPerItem = (obj) => {
-    let totalCartBalance = mappedPrices.reduce((sum, current) => sum + current);
+let mappedPrices = (cartItems) => cartItems.items.map((x) => x.price * x.quantity);
+
+const getAverageSpentPerItem = (shoppingCart) => {
+    let totalCartBalance = mappedPrices(shoppingCart).reduce((sum, current) => sum + current);
     return totalCartBalance / totalQuantity;
 };
 
@@ -1430,11 +1431,12 @@ addToDone("Exercise 100 is complete.");
 // Be sure to do this as programmatically as possible.
 // Hint: Similarly to how we sometimes begin a function with setting a variable to zero, we need a starting place:
 // Hint: Consider creating a variable that is a object with the keys "price" and "quantity" both set to 0. You can then compare each item's price and quantity total to the one from "most"
-const mostSpentOnItem = (obj) => {
-    let highestTotalPricedItem = mappedPrices.reduce((a, b) => (a > b ? a : b));
-    console.log(highestTotalPricedItem);
-    // return obj.items.indexOf(highestTotalPricedItem);
+const mostSpentOnItem = (shoppingCart) => {
+    let highestTotalPricedItem = shoppingCart.items.reduce((previousItem, currentItem) => (previousItem.price * previousItem.quantity > currentItem.price * currentItem.quantity ? previousItem : currentItem));
+    // (previousItem * previousItem > currentItem * currentItem ? previousItem : currentItem));
+        return highestTotalPricedItem;
 };
+
 assert(
     mostSpentOnItem(shoppingCart),
     {
